@@ -1,6 +1,4 @@
-import random
 char_ref = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-
 # Regular Expresion
 def regex(check_these, letter):
     passed = True
@@ -23,18 +21,15 @@ class endec:
             return con_char
         else:
             return letter_char
-    
+
     # Decryption
     def decryption(shift, letter_char):
         if regex("!@#$%^&*()<>,.?/';:\"\| []\{\}`~1234567890+-_=", letter_char) == True:
-            letter_char = letter_char.lower()
-            num_char = letter_char.index(letter_char)
-            num_char = num_char - shift
-            if num_char < 0:
-                num_char = num_char + 25
-            return char_ref[num_char]
+            shift_num = char_ref.index(letter_char) - shift
+            return char_ref[shift_num]
         else:
             return letter_char
+
 
 
 # Encryption User interface
@@ -50,4 +45,14 @@ def encrypt_ui():
     print("Your message is: " + str(coded_message))
     print("And the shift is: " + str(shift))
 
-print(endec.decryption(1, "z"))
+# Decryption UI
+def decrypt_ui():
+    shift = int()
+    print("What is the shift")
+    shift = int(input())
+    print("What is your message")
+    message = input()
+    coded_mesage = ""
+    for chars in message:
+        coded_mesage += endec.decryption(shift, chars)
+    print("Your message is: " + str(coded_mesage))
