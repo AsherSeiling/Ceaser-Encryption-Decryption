@@ -56,3 +56,16 @@ def decrypt_ui():
     for chars in message:
         coded_mesage += endec.decryption(shift, chars)
     print("Your message is: " + str(coded_mesage))
+
+# Encryption and Decryption UI
+def main():
+    print("Would you like to:\n[1]Decrypt\n[2]Encrypt")
+    choice1 = input()
+    if choice1 == "1":
+        decrypt_ui()
+    elif choice1 == "2":
+        encrypt_ui()
+    else:
+        main()
+
+main()
