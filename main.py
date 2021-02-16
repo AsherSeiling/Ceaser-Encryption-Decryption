@@ -1,4 +1,5 @@
 char_ref = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
 # Regular Expresion
 def regex(check_these, letter):
     passed = True
@@ -12,26 +13,41 @@ def regex(check_these, letter):
 class endec:
     # Encryption
     def encrypt(shift, letter_char):
+        upper = False
+        # Check to eliminate all non alphabetic charicters and pass them imdediatly back
         if regex("!@#$%^&*()<>,.?/';:\"\| []\{\}`~1234567890+-_=", letter_char) == True:
-            letter_char = letter_char.lower()
-            letter_shifted_num = char_ref.index(letter_char) + shift
+            # Check if it is upper case
+            if letter_char.isupper() == True:
+                upper = True
+            # Get the location of the letter in the array
+            letter_shifted_num = char_ref.index(letter_char.lower()) + shift
             if letter_shifted_num > 25:
                 letter_shifted_num = letter_shifted_num - 26
             con_char = char_ref[letter_shifted_num]
-            return con_char
+            # Pass back if the item is upper case or not
+            if upper == True:
+                return con_char.upper()
+            else:
+                return con_char
         else:
             return letter_char
 
     # Decryption
     def decryption(shift, letter_char):
+        upper = False
         if regex("!@#$%^&*()<>,.?/';:\"\| []\{\}`~1234567890+-_=", letter_char) == True:
-            shift_num = char_ref.index(letter_char) - shift
-            return char_ref[shift_num]
+            if letter_char.isupper() == True:
+                upper = True
+            shift_num = char_ref.index(letter_char.lower()) - shift
+            if upper == True:
+                return char_ref[shift_num].upper()
+            else:
+                return char_ref[shift_num]
         else:
             return letter_char
 
-
-
+# Create Abreviated class instance
+en = endec
 # Encryption User interface
 def encrypt_ui():
     shift = int()
@@ -40,8 +56,9 @@ def encrypt_ui():
     print("What is your message")
     message = input()
     coded_message = ""
+    counter = 0
     for char in message:
-        coded_message += endec.encrypt(shift, char)
+        coded_message += en.encrypt(shift, char)
     print("Your message is: " + str(coded_message))
     print("And the shift is: " + str(shift))
 
@@ -54,7 +71,7 @@ def decrypt_ui():
     message = input()
     coded_mesage = ""
     for chars in message:
-        coded_mesage += endec.decryption(shift, chars)
+        coded_mesage += en.decryption(shift, chars)
     print("Your message is: " + str(coded_mesage))
 
 # Encryption and Decryption UI
